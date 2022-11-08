@@ -27,3 +27,5 @@ app.use('/api/dish', require('./routes/dish.routes'));
 
 //Escuchar peticiones
 app.listen(process.env.PORT, () => console.log(`Servidor establecido en puerto ${process.env.PORT}`));
+
+module.exports = app;
