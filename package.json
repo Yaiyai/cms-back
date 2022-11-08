@@ -1,12 +1,12 @@
 {
   "name": "nowp-cms",
   "version": "1.0.0",
-  "description": "MFi CMS",
+  "description": "MBR CMS",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "deploy": "heroku logout && heroku git:remote -a apimifi && git push heroku mfi:main"
+    "deploy": "heroku logout && heroku git:remote -a mbrapi && git push heroku mbr:main"
   },
   "repository": {
     "type": "git",

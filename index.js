@@ -25,6 +25,7 @@ app.use('/api/posts', require('./routes/post.routes'));
 app.use('/api/texts', require('./routes/text.routes'));
 app.use('/api/images', require('./routes/image.routes'));
 app.use('/api/messages', require('./routes/messages.routes'));
+app.use('/api/maquinaria', require('./routes/maquinas.routes'));
 
 //Escuchar peticiones
 app.listen(process.env.PORT, () => console.log(`Servidor establecido en puerto ${process.env.PORT}`));
