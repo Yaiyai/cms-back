@@ -1,19 +1,19 @@
 {
   "name": "nowp-cms",
   "version": "1.0.0",
-  "description": "CMS",
+  "description": "San Roque CMS",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "deploy": ""
+    "deploy": "heroku logout && heroku git:remote -a sanroqueapp && git push heroku sanroque:main"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Yaiyai/no-wp-cms.git"
   },
   "engines": {
-    "node": "16.x",
+    "node": "13.10.1",
     "npm": "6.13.7"
   },
   "author": "yaidev",

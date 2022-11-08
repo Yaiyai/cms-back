@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const companyModel = new Schema(
 	{
 		name: {
@@ -37,13 +37,19 @@ const companyModel = new Schema(
 		secondaryLogo: {
 			type: String,
 		},
-		categories: {
-			type: Array,
-		},
+		categories: [
+			new Schema(
+				{
+					order: Number,
+					name: String,
+				},
+				{ _id: false }
+			),
+		],
 	},
 	{
 		timestamps: true,
 	}
-)
-const Company = mongoose.model('Company', companyModel)
-module.exports = Company
+);
+const Company = mongoose.model('Company', companyModel);
+module.exports = Company;
