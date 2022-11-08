@@ -5,23 +5,22 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js",
-    "deploy": "heroku logout && heroku git:remote -a apimifi && git push heroku mfi:main"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Yaiyai/no-wp-cms.git"
+    "url": "git+https://github.com/Yaiyai/cms-back.git"
   },
   "engines": {
-    "node": "13.10.1",
+    "node": "16.x",
     "npm": "6.13.7"
   },
   "author": "yaidev",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Yaiyai/no-wp-cms/issues"
+    "url": "https://github.com/Yaiyai/cms-back/issues"
   },
-  "homepage": "https://github.com/Yaiyai/no-wp-cms#readme",
+  "homepage": "https://github.com/Yaiyai/cms-back#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
