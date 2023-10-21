@@ -1,6 +1,11 @@
 const Dish = require('../../models/dish.model');
 
 const getDishes = async (req, res) => {
+	await Dish.find()
+		.then((dishes) => res.status(201).json({ ok: true, msg: 'Dishes encontrado', dishes }))
+		.catch((err) => res.status(400).json({ ok: false, msg: 'Dishes no encontrado', err }));
+};
+const getDishesByLang = async (req, res) => {
 	await Dish.find({ language: req.query.language })
 		.then((dishes) => res.status(201).json({ ok: true, msg: 'Dishes encontrado', dishes }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'Dishes no encontrado', err }));
@@ -66,4 +71,4 @@ const createLangToPost = async (dish) => {
 	return;
 };
 
-module.exports = { getDish, addDish, updateDish, deleteDish, getDishes, getCategoryDishes, createLanguages };
+module.exports = { getDish, addDish, updateDish, deleteDish, getDishes, getCategoryDishes, createLanguages, getDishesByLang };
