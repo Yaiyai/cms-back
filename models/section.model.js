@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const sectionModel = new Schema(
 	{
 		sectionType: {
@@ -20,10 +20,15 @@ const sectionModel = new Schema(
 		gallery: Array,
 		features: Array,
 		formInputs: Array,
+		language: {
+			type: String,
+			enum: ['ES', 'EN'],
+			default: 'ES',
+		},
 	},
 	{
 		timestamps: true,
 	}
-)
-const Section = mongoose.model('Section', sectionModel)
-module.exports = Section
+);
+const Section = mongoose.model('Section', sectionModel);
+module.exports = Section;

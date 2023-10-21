@@ -22,12 +22,16 @@ const postModel = new Schema(
 			type: Boolean,
 			default: false,
 		},
-		icon: String,
 		slug: String,
 		slugArray: [String],
 		deletedAt: Date,
 		postDate: String,
 		categories: Array,
+		language: {
+			type: String,
+			enum: ['ES', 'EN'],
+			default: 'ES',
+		},
 	},
 	{
 		timestamps: true,
