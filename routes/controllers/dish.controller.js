@@ -43,6 +43,27 @@ const updateDish = async (req, res) => {
 		.catch((err) => res.status(400).json({ ok: false, msg: 'Dish no actualizado', err }));
 };
 
+const translateDish = async (req, res) => {
+	const dishId = req.params.dishId;
+	const spanishDish = await Dish.findById(dishId);
+	if (!spanishDish) {
+		return res.status(404).json({ ok: false, msg: 'Dish no encontrado, no se puede borrar.' });
+	}
+
+	let translation = {
+		language: 'EN',
+		alergenos: spanishDish.alergenos,
+		active: spanishDish.active,
+		dish: spanishDish.dish,
+		price: spanishDish.price,
+		category: spanishDish.category,
+	};
+
+	await Dish.create(translation)
+		.then((dish) => res.status(201).json({ ok: true, msg: 'Dish traducido', dish }))
+		.catch((err) => res.status(400).json({ ok: false, msg: 'Dish no traducido', err }));
+};
+
 const deleteDish = async (req, res) => {
 	const dishId = req.params.dishId;
 	const checkExistence = await Dish.findById(dishId);
@@ -71,4 +92,4 @@ const createLangToPost = async (dish) => {
 	return;
 };
 
-module.exports = { getDish, addDish, updateDish, deleteDish, getDishes, getCategoryDishes, createLanguages, getDishesByLang };
+module.exports = { getDish, addDish, updateDish, deleteDish, getDishes, getCategoryDishes, createLanguages, getDishesByLang, translateDish };
