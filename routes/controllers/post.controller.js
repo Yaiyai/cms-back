@@ -72,7 +72,7 @@ const getUserPosts = async (req, res) => {
 const getPostsByCategory = async (req, res) => {
 	const theCategory = req.params.category;
 
-	await Post.find({ categories: { $in: [theCategory] } })
+	await Post.find({ categories: { $in: [theCategory] }, language: req.query.language })
 		.populate('content.text')
 		.populate('content.image')
 		.populate('author')
