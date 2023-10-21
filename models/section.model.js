@@ -20,11 +20,6 @@ const sectionModel = new Schema(
 		gallery: Array,
 		features: Array,
 		formInputs: Array,
-		language: {
-			type: String,
-			enum: ['ES', 'EN'],
-			default: 'ES',
-		},
 	},
 	{
 		timestamps: true,

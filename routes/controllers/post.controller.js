@@ -20,7 +20,8 @@ const createSlugs = async (req, res) => {
 
 const getPosts = async (req, res) => {
 	const limit = parseInt(req.query.limit, 10) || 0;
-	await Post.find()
+	const lang = req.query.language || 'ES';
+	await Post.find({ language: lang })
 		.limit(limit)
 		.populate('content.text')
 		.populate('content.image')
