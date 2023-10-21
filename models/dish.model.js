@@ -17,6 +17,11 @@ const dishModel = Schema(
 			type: Boolean,
 			default: true,
 		},
+		language: {
+			type: String,
+			enum: ['ES', 'EN'],
+			default: 'ES',
+		},
 	},
 	{
 		timestamps: true,

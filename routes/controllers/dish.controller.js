@@ -1,13 +1,13 @@
 const Dish = require('../../models/dish.model');
 
 const getDishes = async (req, res) => {
-	await Dish.find()
+	await Dish.find({ language: req.query.language })
 		.then((dishes) => res.status(201).json({ ok: true, msg: 'Dishes encontrado', dishes }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'Dishes no encontrado', err }));
 };
 
 const getCategoryDishes = async (req, res) => {
-	await Dish.find({ category: req.params.category })
+	await Dish.find({ category: req.params.category, language: req.query.language })
 		.then((dishes) => res.status(201).json({ ok: true, msg: 'Dishes de categoría encontrado', dishes }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'Dishes de categoría no encontrado', err }));
 };
@@ -49,4 +49,21 @@ const deleteDish = async (req, res) => {
 		.catch((err) => res.status(400).json({ ok: false, msg: 'Dish no borrado', err }));
 };
 
-module.exports = { getDish, addDish, updateDish, deleteDish, getDishes, getCategoryDishes };
+const createLanguages = async (req, res) => {
+	await Dish.find()
+		.then((dishes) => {
+			dishes.forEach((dish) => createLangToPost(dish));
+		})
+		.then(() => res.status(201).json({ ok: true, msg: 'Idioma en platos sin idiomas' }))
+		.catch((err) => res.status(400).json({ ok: false, msg: 'No se han podido crear idiomas', err }));
+};
+
+const createLangToPost = async (dish) => {
+	if (!dish.language) {
+		let lang = 'ES';
+		await Dish.findByIdAndUpdate(dish._id, { language: lang }, { new: true }).catch((err) => res.status(400).json({ ok: false, msg: 'No se ha actualizado el idioma del plato', err }));
+	}
+	return;
+};
+
+module.exports = { getDish, addDish, updateDish, deleteDish, getDishes, getCategoryDishes, createLanguages };
