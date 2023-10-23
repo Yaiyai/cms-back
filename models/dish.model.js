@@ -20,7 +20,6 @@ const dishModel = Schema(
 		language: {
 			type: String,
 			enum: ['ES', 'EN'],
-			default: 'ES',
 		},
 	},
 	{
