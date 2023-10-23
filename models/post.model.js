@@ -30,7 +30,6 @@ const postModel = new Schema(
 		language: {
 			type: String,
 			enum: ['ES', 'EN'],
-			default: 'ES',
 		},
 	},
 	{
