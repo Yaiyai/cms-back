@@ -104,7 +104,7 @@ const deletePost = async (req, res) => {
 		return res.status(400).json({ ok: true, msg: 'El post que intentas borrar no existe' });
 	}
 
-	await Post.findByIdAndUpdate(postID, { deletedAt: new Date(), status: 'borrada' })
+	await Post.findByIdAndDelete(postID)
 		.then(() => res.status(201).json({ ok: true, msg: 'Post Borrado' }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha borrado nada', err }));
 };
