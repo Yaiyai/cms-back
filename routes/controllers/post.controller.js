@@ -71,7 +71,7 @@ const getUserPosts = async (req, res) => {
 const getPostsByCategory = async (req, res) => {
 	const theCategory = req.params.category;
 
-	await Post.find({ categories: { $in: [theCategory] } })
+	await Post.find({ language: req.query.language, status: 'publicado', categories: { $in: [theCategory] } })
 		.populate('content.text')
 		.populate('content.image')
 		.then((posts) => res.status(201).json({ ok: true, msg: 'Posts por Categoría encontrados', posts }))
@@ -109,4 +109,21 @@ const deletePost = async (req, res) => {
 		.catch((err) => res.status(400).json({ ok: false, msg: 'No se ha borrado nada', err }));
 };
 
-module.exports = { getPosts, getPost, getPostsByCategory, getPostBySlug, getUserPosts, addPost, updatePost, deletePost, createSlugs };
+const createLanguages = async (req, res) => {
+	await Post.find()
+		.then((posts) => {
+			posts.forEach((post) => createLangToPost(post));
+		})
+		.then(() => res.status(201).json({ ok: true, msg: 'Idioma en posts sin idiomas' }))
+		.catch((err) => res.status(400).json({ ok: false, msg: 'No se han podido crear idiomas', err }));
+};
+
+const createLangToPost = async (post) => {
+	if (!post.language) {
+		let lang = 'ES';
+		await Post.findByIdAndUpdate(post._id, { language: lang }, { new: true }).catch((err) => res.status(400).json({ ok: false, msg: 'No se ha actualizado el idioma del post', err }));
+	}
+	return;
+};
+
+module.exports = { createLanguages, getPosts, getPost, getPostsByCategory, getPostBySlug, getUserPosts, addPost, updatePost, deletePost, createSlugs };
