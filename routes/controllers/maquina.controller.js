@@ -87,7 +87,10 @@ const deleteMaquina = async (req, res) => {
 const getAllMaquinas = async (req, res) => {
 	const lang = req.query.lang || 'es';
 
-	await Maquina.find({ lang })
+	// Si lang=both, traer todos los idiomas
+	const filter = lang === 'both' ? {} : { lang };
+
+	await Maquina.find(filter)
 		.then((data) => res.status(200).json({ ok: true, msg: 'Maquinas traidas', data }))
 		.catch((err) => res.status(400).json({ ok: false, msg: 'Maquina no encontradas', err }));
 };
@@ -97,6 +100,21 @@ const getMaquina = async (req, res) => {
 	const lang = req.query.lang || 'es';
 
 	try {
+		// Si se solicita 'both', devolver todas las traducciones
+		if (lang === 'both') {
+			const maquina = await Maquina.findById(id);
+			if (!maquina) {
+				return res.status(404).json({ ok: false, msg: 'Maquina no encontrada' });
+			}
+
+			const allVersions = await Maquina.find({ contentId: maquina.contentId });
+			return res.status(200).json({
+				ok: true,
+				msg: 'Maquina encontrada (todas las traducciones)',
+				data: allVersions,
+			});
+		}
+
 		// 1. Buscar por ID en el idioma solicitado
 		let maquina = await Maquina.findOne({ _id: id, lang });
 

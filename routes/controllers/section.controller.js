@@ -6,6 +6,21 @@ const getSection = async (req, res) => {
 	const lang = req.query.lang || 'es';
 
 	try {
+		// Si se solicita 'both', devolver todas las traducciones
+		if (lang === 'both') {
+			const section = await Section.findById(sectionID);
+			if (!section) {
+				return res.status(404).json({ ok: false, msg: 'Sección no encontrada' });
+			}
+
+			const allVersions = await Section.find({ contentId: section.contentId });
+			return res.status(200).json({
+				ok: true,
+				msg: 'Sección encontrada (todas las traducciones)',
+				sections: allVersions,
+			});
+		}
+
 		// 1. Buscar por ID en el idioma solicitado
 		let section = await Section.findOne({ _id: sectionID, lang });
 
@@ -53,7 +68,10 @@ const getSection = async (req, res) => {
 const getAllSections = async (req, res) => {
 	const lang = req.query.lang || 'es';
 
-	await Section.find({ lang })
+	// Si lang=both, traer todos los idiomas
+	const filter = lang === 'both' ? {} : { lang };
+
+	await Section.find(filter)
 		.then((sections) => res.status(200).json({ ok: true, msg: 'Secciones encontradas', sections }))
 		.catch((err) => res.status(404).json({ ok: false, msg: 'No hay secciones', err }));
 };
