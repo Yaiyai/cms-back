@@ -1,7 +1,12 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const sectionModel = new Schema(
 	{
+		contentId: {
+			type: String,
+			required: true,
+			index: true,
+		},
 		sectionType: {
 			type: String,
 			enum: ['section', 'nav', 'header', 'footer'],
@@ -10,7 +15,12 @@ const sectionModel = new Schema(
 		sectionName: {
 			type: String,
 			required: true,
-			unique: true,
+		},
+		lang: {
+			type: String,
+			enum: ['es', 'en'],
+			default: 'es',
+			required: true,
 		},
 		title: String,
 		subtitle: String,
@@ -23,7 +33,11 @@ const sectionModel = new Schema(
 	},
 	{
 		timestamps: true,
-	}
-)
-const Section = mongoose.model('Section', sectionModel)
-module.exports = Section
+	},
+);
+
+// Índice compuesto único: solo una versión por idioma de cada contenido
+sectionModel.index({ contentId: 1, lang: 1 }, { unique: true });
+
+const Section = mongoose.model('Section', sectionModel);
+module.exports = Section;

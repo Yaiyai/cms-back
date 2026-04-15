@@ -2,10 +2,20 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const maquinaModel = new Schema(
 	{
+		contentId: {
+			type: String,
+			required: true,
+			index: true,
+		},
 		name: {
 			type: String,
 			required: true,
-			unique: true,
+		},
+		lang: {
+			type: String,
+			enum: ['es', 'en'],
+			default: 'es',
+			required: true,
 		},
 		image: {
 			type: String,
@@ -30,7 +40,13 @@ const maquinaModel = new Schema(
 	},
 	{
 		timestamps: true,
-	}
+	},
 );
+
+// Índice compuesto único: solo una versión por idioma de cada contenido
+maquinaModel.index({ contentId: 1, lang: 1 }, { unique: true });
+// Índice para búsqueda por slug
+maquinaModel.index({ slug: 1, lang: 1 });
+
 const Maquina = mongoose.model('Maquina', maquinaModel);
 module.exports = Maquina;
