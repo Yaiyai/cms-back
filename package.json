@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "migrate:lang": "node migrate-add-lang.js",
+    "migrate:contentid": "node migrate-contentId-and-translations.js"
   },
   "repository": {
     "type": "git",
